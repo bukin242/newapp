@@ -1,4 +1,4 @@
 class Artist < ActiveRecord::Base
   default_scope { order('name asc') }
-  has_many :song
+  has_many :songs
 end
