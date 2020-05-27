@@ -1,0 +1,23 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  port: 5432
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: localhost
+  username: abukin
+  password: 123
+
+development:
+  <<: *default
+  database: newapp_development
+
+test:
+  <<: *default
+  database: newapp_test
+
+production:
+  <<: *default
+  database: newapp_production
+  host: <%= ENV['TELEMED_DATABASE_HOST'] %>
+  username: <%= ENV['TELEMED_DATABASE_USER'] %>
+  password: <%= ENV['TELEMED_DATABASE_PASSWORD'] %>
