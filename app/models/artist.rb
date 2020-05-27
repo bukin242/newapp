@@ -17,4 +17,24 @@ class Artist < ActiveRecord::Base
 
     Song.find_by_sql(sql)
   end
+
+  def self.top
+    sql = <<-SQL
+      with suitable_songs as (
+        select songs.artist_id, downloads.song_id as song_id, count(downloads.song_id) as count from songs
+          join downloads on downloads.song_id = songs.id
+          group by songs.artist_id, downloads.song_id
+      )
+      , suitable_artists as (
+        select suitable_songs.artist_id, sum(suitable_songs.count) as count from artists
+          join suitable_songs on artists.id = suitable_songs.artist_id
+          group by suitable_songs.artist_id
+      )
+      select * from artists
+        join suitable_artists on artists.id = suitable_artists.artist_id
+       order by suitable_artists.count desc
+    SQL
+
+    Artist.find_by_sql(sql)
+  end
 end
