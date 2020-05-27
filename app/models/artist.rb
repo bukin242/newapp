@@ -18,7 +18,7 @@ class Artist < ActiveRecord::Base
     Song.find_by_sql(sql)
   end
 
-  def self.top
+  def self.top(letter, count)
     sql = <<-SQL
       with suitable_songs as (
         select songs.artist_id, downloads.song_id as song_id, count(downloads.song_id) as count from songs
@@ -32,7 +32,9 @@ class Artist < ActiveRecord::Base
       )
       select * from artists
         join suitable_artists on artists.id = suitable_artists.artist_id
+        where name ilike \'#{letter}%\'
        order by suitable_artists.count desc
+       limit #{count}
     SQL
 
     Artist.find_by_sql(sql)
