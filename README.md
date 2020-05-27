@@ -1,24 +1,5 @@
-# README
+# Решение
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* "Masha pila sok" => 5, 4, 3 => ( 3 ^ 4 ) ^ 5 => 3486784401
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+`"Masha pila sok".split(" ").reverse.map(&:size).inject{ |m, n| m**n }`
